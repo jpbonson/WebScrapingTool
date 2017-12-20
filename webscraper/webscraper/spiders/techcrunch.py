@@ -11,7 +11,7 @@ class TechcrunchSpider(scrapy.Spider):
     }
 
     def parse(self, response):
-        response.selector.remove_namespaces()  # Remove XML namespaces
+        response.selector.remove_namespaces()
 
         titles = response.xpath('//item/title/text()').extract()
         authors = response.xpath('//item/creator/text()').extract()
