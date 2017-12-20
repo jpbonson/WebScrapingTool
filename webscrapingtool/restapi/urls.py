@@ -19,7 +19,7 @@ urlpatterns = [
     ),
     url(
         r'^outlets/(?P<outlet_id>[0-9]+)/authors/(?P<author_id>[0-9]+)/$',
-        views.AuthorList.as_view(),
+        views.AuthorDetail.as_view(),
         name='author-detail'
     ),
 ]

@@ -5,7 +5,7 @@ from django.db import models
 class Outlet(models.Model):
     name = models.CharField(max_length=255)
     website = models.CharField(max_length=255)
-    description = models.TextField()
+    description = models.TextField(blank=True)
 
 
 class Author(models.Model):
