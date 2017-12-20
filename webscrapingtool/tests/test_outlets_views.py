@@ -1,6 +1,6 @@
 import json
 from django.urls import reverse
-from .models import Outlet
+from restapi.models import Outlet
 from rest_framework import status
 from rest_framework.test import APITestCase
 
