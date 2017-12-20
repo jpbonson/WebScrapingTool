@@ -22,4 +22,14 @@ urlpatterns = [
         views.AuthorDetail.as_view(),
         name='author-detail'
     ),
+    url(
+        r'^outlets/(?P<outlet_id>[0-9]+)/articles/$',
+        views.ArticleList.as_view(),
+        name='article-list'
+    ),
+    url(
+        r'^outlets/(?P<outlet_id>[0-9]+)/articles/(?P<article_id>[0-9]+)/$',
+        views.ArticleDetail.as_view(),
+        name='article-detail'
+    ),
 ]

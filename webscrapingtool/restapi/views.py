@@ -1,6 +1,6 @@
 from rest_framework import generics
-from .models import Outlet, Author
-from .serializers import OutletSerializer, AuthorSerializer
+from .models import Outlet, Author, Article
+from .serializers import OutletSerializer, AuthorSerializer, ArticleSerializer
 
 
 # GET  outlets/: return a list of Outlets
@@ -46,3 +46,32 @@ class AuthorDetail(generics.RetrieveUpdateDestroyAPIView):
     def get_queryset(self):
         author = self.kwargs['author_id']
         return Author.objects.filter(id=author)
+
+
+# GET  outlets/<outlet_id>/articles/: return a list of Articles
+# POST outlets/<outlet_id>/articles/: create a Article
+class ArticleList(generics.ListCreateAPIView):
+    serializer_class = ArticleSerializer
+    lookup_url_kwarg1 = 'outlet_id'
+
+    def perform_create(self, serializer):
+        outlet_id = self.kwargs['outlet_id']
+        author_id = self.request.data['author_id']
+        serializer.save(outlet_id=outlet_id, author_id=author_id)
+
+    def get_queryset(self):
+        outlet = self.kwargs['outlet_id']
+        return Article.objects.filter(outlet__id=outlet)
+
+
+# GET    outlets/<outlet_id>/articles/<article_id>/: return a Article
+# PUT    outlets/<outlet_id>/articles/<article_id>/: update a Article
+# PATCH  outlets/<outlet_id>/articles/<article_id>/: patch a Article
+# DELETE outlets/<outlet_id>/articles/<article_id>/: delete a Article
+class ArticleDetail(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = ArticleSerializer
+    lookup_url_kwarg = 'article_id'
+
+    def get_queryset(self):
+        article = self.kwargs['article_id']
+        return Article.objects.filter(id=article)

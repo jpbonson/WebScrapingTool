@@ -10,6 +10,7 @@ class AuthorTests(APITestCase):
         outlet1 = Outlet.objects.create(name="WolfNews", website="wolf.com", description="dark")
         outlet2 = Outlet.objects.create(
             name="Culture", website="culture.com", description="interesting")
+
         Author.objects.create(name="Ana", email="ana@email.com", outlet=outlet1)
         Author.objects.create(name="Joao", email="joao@hotmail.com", outlet=outlet1)
         Author.objects.create(name="Maria", email="ma123@gmail.com", outlet=outlet2)

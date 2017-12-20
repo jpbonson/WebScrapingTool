@@ -1,16 +1,25 @@
-from .models import Outlet, Author
+from .models import Outlet, Author, Article
 from rest_framework import serializers
 
 
+class ArticleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Article
+        fields = ('id', 'title', 'content', 'publication_date')
+
+
 class AuthorSerializer(serializers.ModelSerializer):
+    articles = ArticleSerializer(many=True, read_only=True)
+
     class Meta:
         model = Author
-        fields = ('id', 'name', 'email')
+        fields = ('id', 'name', 'email', 'articles')
 
 
 class OutletSerializer(serializers.ModelSerializer):
     authors = AuthorSerializer(many=True, read_only=True)
+    articles = ArticleSerializer(many=True, read_only=True)
 
     class Meta:
         model = Outlet
-        fields = ('id', 'name', 'website', 'description', 'authors')
+        fields = ('id', 'name', 'website', 'description', 'authors', 'articles')
