@@ -4,19 +4,20 @@
 
 ### How to install? ###
 
-[TODO]
+pip install -r requirements.txt
+python manage.py makemigrations
+python manage.py migrate
+export DJANGO_SETTINGS_MODULE=webscrapingtool.settings
 
 ### How to run? ###
 
-[TODO]
+python manage.py runserver
 
 ### How to test? ###
 
-[TODO]
+python manage.py test
 
 ### API Routes ###
-
-[TODO]
 
 #### Outlets
 
