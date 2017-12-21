@@ -10,7 +10,7 @@ Python. Django. SQLite3. Scrapy.
 
 ```
 sudo apt-get install python-dev python-pip libxml2-dev libxslt1-dev zlib1g-dev libffi-dev libssl-dev python3 python3-dev libpq-dev postgresql postgresql-contrib
-pip install -r requirements.txt
+pipenv install
 python manage.py makemigrations
 python manage.py migrate
 export DJANGO_SETTINGS_MODULE=webscrapingtool.settings
