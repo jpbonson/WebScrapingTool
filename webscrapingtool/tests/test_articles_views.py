@@ -47,7 +47,7 @@ class ArticleTests(APITestCase):
         """
         sample_outlet_id = 1
         sample_author_id = 1
-        url = reverse('article-list', kwargs={'outlet_id': sample_outlet_id})
+        url = reverse('v1:article-list', kwargs={'outlet_id': sample_outlet_id})
         data = {
             'title': 'Lobisomens Contra-atacam',
             'content': 'rg gergrgreherehr hergeer gerr',
@@ -72,7 +72,7 @@ class ArticleTests(APITestCase):
         """
         sample_outlet_id = 11111
         sample_author_id = 1
-        url = reverse('article-list', kwargs={'outlet_id': sample_outlet_id})
+        url = reverse('v1:article-list', kwargs={'outlet_id': sample_outlet_id})
         data = {
             'title': 'Lobisomens Contra-atacam',
             'content': 'rg gergrgreherehr hergeer gerr',
@@ -90,7 +90,7 @@ class ArticleTests(APITestCase):
         """
         sample_outlet_id = 1
         sample_author_id = 11111
-        url = reverse('article-list', kwargs={'outlet_id': sample_outlet_id})
+        url = reverse('v1:article-list', kwargs={'outlet_id': sample_outlet_id})
         data = {
             'title': 'Lobisomens Contra-atacam',
             'content': 'rg gergrgreherehr hergeer gerr',
@@ -108,7 +108,7 @@ class ArticleTests(APITestCase):
         """
         sample_outlet_id = 1
         sample_author_name = "Ana"
-        url = reverse('article-list', kwargs={'outlet_id': sample_outlet_id})
+        url = reverse('v1:article-list', kwargs={'outlet_id': sample_outlet_id})
         data = {
             'title': 'Lobisomens Contra-atacam',
             'content': 'rg gergrgreherehr hergeer gerr',
@@ -134,7 +134,7 @@ class ArticleTests(APITestCase):
         """
         sample_outlet_id = 1
         sample_author_name = "Pablo"
-        url = reverse('article-list', kwargs={'outlet_id': sample_outlet_id})
+        url = reverse('v1:article-list', kwargs={'outlet_id': sample_outlet_id})
         data = {
             'title': 'Lobisomens Contra-atacam',
             'content': 'rg gergrgreherehr hergeer gerr',
@@ -163,7 +163,7 @@ class ArticleTests(APITestCase):
         Ensure we can list article objects.
         """
         sample_outlet_id = 1
-        url = reverse('article-list', kwargs={'outlet_id': sample_outlet_id})
+        url = reverse('v1:article-list', kwargs={'outlet_id': sample_outlet_id})
         response = self.client.get(url)
         result = map(lambda x: x['title'], json.loads(response.content))
         expected = map(lambda x: x.title, list(Article.objects.filter(outlet_id=sample_outlet_id)))
@@ -176,7 +176,7 @@ class ArticleTests(APITestCase):
         """
         sample_outlet_id = 1
         sample_id = 1
-        url = reverse('article-detail', kwargs={
+        url = reverse('v1:article-detail', kwargs={
             'outlet_id': sample_outlet_id, 'article_id': sample_id
         })
         response = self.client.get(url)
@@ -192,7 +192,7 @@ class ArticleTests(APITestCase):
         sample_id = 1
         sample_author_id = 1
         sample_outlet_id = 1
-        url = reverse('article-detail', kwargs={
+        url = reverse('v1:article-detail', kwargs={
             'outlet_id': sample_outlet_id, 'article_id': sample_id
         })
         data = {
@@ -215,7 +215,7 @@ class ArticleTests(APITestCase):
         """
         sample_outlet_id = 1
         sample_id = 1
-        url = reverse('article-detail', kwargs={
+        url = reverse('v1:article-detail', kwargs={
             'outlet_id': sample_outlet_id, 'article_id': sample_id
         })
         data = {'title': 'Violinos e Girafas'}
@@ -232,7 +232,7 @@ class ArticleTests(APITestCase):
         """
         sample_outlet_id = 1
         sample_id = 1
-        url = reverse('article-detail', kwargs={
+        url = reverse('v1:article-detail', kwargs={
             'outlet_id': sample_outlet_id, 'article_id': sample_id
         })
         response = self.client.delete(url)

@@ -21,7 +21,7 @@ class APIPipeline(object):
         if valid:
             data = dict(item)
 
-            url = 'http://{host}:{port}/outlets/{outlet_id}/articles/'.format(
+            url = 'http://{host}:{port}/v1/outlets/{outlet_id}/articles/'.format(
                 host=host, port=port, outlet_id=outlet_id)
             payload = {
                 'title': data['title'].encode('utf-8'),

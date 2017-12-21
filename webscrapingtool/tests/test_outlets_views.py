@@ -14,7 +14,7 @@ class OutletTests(APITestCase):
         """
         Ensure we can create a new outlet object.
         """
-        url = reverse('outlet-list')
+        url = reverse('v1:outlet-list')
         data = {'name': 'NiceNews', 'website': 'news.com', 'description': 'cool website'}
         response = self.client.post(url, data, format='json')
         result = json.loads(response.content)
@@ -26,7 +26,7 @@ class OutletTests(APITestCase):
         """
         Ensure we can list outlet objects.
         """
-        url = reverse('outlet-list')
+        url = reverse('v1:outlet-list')
         response = self.client.get(url)
         result = map(lambda x: x['name'], json.loads(response.content))
         expected = map(lambda x: x.name, list(Outlet.objects.all()))
@@ -38,7 +38,7 @@ class OutletTests(APITestCase):
         Ensure we can get an outlet object.
         """
         sample_id = 1
-        url = reverse('outlet-detail', kwargs={'outlet_id': sample_id})
+        url = reverse('v1:outlet-detail', kwargs={'outlet_id': sample_id})
         response = self.client.get(url)
         result = json.loads(response.content)
         expected = Outlet.objects.get(id=sample_id)
@@ -50,7 +50,7 @@ class OutletTests(APITestCase):
         Ensure we can update an outlet object.
         """
         sample_id = 1
-        url = reverse('outlet-detail', kwargs={'outlet_id': sample_id})
+        url = reverse('v1:outlet-detail', kwargs={'outlet_id': sample_id})
         data = {'name': 'NewNews', 'website': 'news2.com', 'description': ''}
         response = self.client.put(url, data, format='json')
         result = json.loads(response.content)
@@ -65,7 +65,7 @@ class OutletTests(APITestCase):
         Ensure we can partially update an outlet object.
         """
         sample_id = 1
-        url = reverse('outlet-detail', kwargs={'outlet_id': sample_id})
+        url = reverse('v1:outlet-detail', kwargs={'outlet_id': sample_id})
         data = {'name': 'NewNews'}
         response = self.client.patch(url, data, format='json')
         result = json.loads(response.content)
@@ -79,7 +79,7 @@ class OutletTests(APITestCase):
         Ensure we can delete an outlet object.
         """
         sample_id = 1
-        url = reverse('outlet-detail', kwargs={'outlet_id': sample_id})
+        url = reverse('v1:outlet-detail', kwargs={'outlet_id': sample_id})
         response = self.client.delete(url)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         self.assertEqual(response.content, '')

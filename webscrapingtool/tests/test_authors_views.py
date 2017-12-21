@@ -20,7 +20,7 @@ class AuthorTests(APITestCase):
         Ensure we can create a new author object.
         """
         sample_outlet_id = 1
-        url = reverse('author-list', kwargs={'outlet_id': sample_outlet_id})
+        url = reverse('v1:author-list', kwargs={'outlet_id': sample_outlet_id})
         data = {'name': 'Ricardo', 'email': 'ricardao@news.com', 'outlet_id': sample_outlet_id}
         response = self.client.post(url, data, format='json')
         result = json.loads(response.content)
@@ -34,7 +34,7 @@ class AuthorTests(APITestCase):
         Ensure we can't create a new author if the outlet id doesn't exist.
         """
         sample_outlet_id = 11111
-        url = reverse('author-list', kwargs={'outlet_id': sample_outlet_id})
+        url = reverse('v1:author-list', kwargs={'outlet_id': sample_outlet_id})
         data = {'name': 'Ricardo', 'email': 'ricardao@news.com', 'outlet_id': sample_outlet_id}
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.content, '["Outlet id does not exist"]')
@@ -45,7 +45,7 @@ class AuthorTests(APITestCase):
         Ensure we can list author objects.
         """
         sample_outlet_id = 1
-        url = reverse('author-list', kwargs={'outlet_id': sample_outlet_id})
+        url = reverse('v1:author-list', kwargs={'outlet_id': sample_outlet_id})
         response = self.client.get(url)
         result = map(lambda x: x['name'], json.loads(response.content))
         expected = map(lambda x: x.name, list(Author.objects.filter(outlet_id=sample_outlet_id)))
@@ -58,7 +58,7 @@ class AuthorTests(APITestCase):
         """
         sample_outlet_id = 1
         sample_id = 1
-        url = reverse('author-detail', kwargs={
+        url = reverse('v1:author-detail', kwargs={
             'outlet_id': sample_outlet_id, 'author_id': sample_id
         })
         response = self.client.get(url)
@@ -73,7 +73,7 @@ class AuthorTests(APITestCase):
         """
         sample_outlet_id = 1
         sample_id = 1
-        url = reverse('author-detail', kwargs={
+        url = reverse('v1:author-detail', kwargs={
             'outlet_id': sample_outlet_id, 'author_id': sample_id
         })
         data = {'name': 'Joana', 'email': 'francesavior@gmail.com'}
@@ -90,7 +90,7 @@ class AuthorTests(APITestCase):
         """
         sample_outlet_id = 1
         sample_id = 1
-        url = reverse('author-detail', kwargs={
+        url = reverse('v1:author-detail', kwargs={
             'outlet_id': sample_outlet_id, 'author_id': sample_id
         })
         data = {'name': 'Ana Paula'}
@@ -107,7 +107,7 @@ class AuthorTests(APITestCase):
         """
         sample_outlet_id = 1
         sample_id = 1
-        url = reverse('author-detail', kwargs={
+        url = reverse('v1:author-detail', kwargs={
             'outlet_id': sample_outlet_id, 'author_id': sample_id
         })
         response = self.client.delete(url)

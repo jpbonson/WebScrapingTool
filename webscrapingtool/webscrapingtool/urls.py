@@ -16,5 +16,5 @@ Including another URLconf
 from django.conf.urls import url, include
 
 urlpatterns = [
-    url(r'^', include('restapi.urls')),
+    url(r'^v1/', include('restapi.urls', namespace='v1')),
 ]
