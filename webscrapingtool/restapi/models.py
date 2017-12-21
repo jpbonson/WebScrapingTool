@@ -32,3 +32,6 @@ class Article(models.Model):
 
     def __repr__(self):
         return "%s(%r)" % (self.__class__, self.__dict__)
+
+    class Meta:
+        unique_together = (("outlet", "title", "author"),)

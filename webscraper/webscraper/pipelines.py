@@ -13,7 +13,8 @@ class APIPipeline(object):
         'total': 0,
         'invalid': 0,
         'valid': 0,
-        'status': defaultdict(int)
+        'status': defaultdict(int),
+        'status_text': defaultdict(int)
     }
 
     def process_item(self, item, spider):
@@ -48,10 +49,12 @@ class APIPipeline(object):
             response = requests.post(url, data=json.dumps(payload), headers=headers)
 
             APIPipeline.report['status'][response.status_code] += 1
+            if response.status_code != 201:
+                APIPipeline.report['status_text'][response.text] += 1
 
             logging.debug('Data sent to API, response {0}'.format(str(response)))
 
-        logging.debug('API report: {0}'.format(str(APIPipeline.report)))
+        logging.debug('\n\n\nAPI report: {0}\n\n\n'.format(str(APIPipeline.report)))
         return item
 
     @staticmethod

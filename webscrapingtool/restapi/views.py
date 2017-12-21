@@ -1,5 +1,6 @@
 from rest_framework import generics
 from rest_framework.exceptions import ValidationError
+from django.db.utils import IntegrityError
 from .models import Outlet, Author, Article
 from .serializers import OutletSerializer, AuthorSerializer, ArticleSerializer
 
@@ -59,11 +60,17 @@ class ArticleList(generics.ListCreateAPIView):
     lookup_url_kwarg1 = 'outlet_id'
 
     def perform_create(self, serializer):
+        def save_article(outlet_id, author_id):
+            try:
+                serializer.save(outlet_id=outlet_id, author_id=author_id)
+            except IntegrityError:
+                raise ValidationError("Article must be unique given the same outlet and author")
+
         def check_and_save_for_author_id():
             author_id = self.request.data['author_id']
             if not Author.objects.filter(id=author_id).exists():
                 raise ValidationError("Author id does not exist")
-            serializer.save(outlet_id=outlet_id, author_id=author_id)
+            save_article(outlet_id, author_id)
 
         def check_and_save_for_author_name():
             author = self.request.data['author']
@@ -72,7 +79,7 @@ class ArticleList(generics.ListCreateAPIView):
                 author_id = Author.objects.create(name=author, outlet_id=outlet_id).id
             else:
                 author_id = result[0]['id']
-            serializer.save(outlet_id=outlet_id, author_id=author_id)
+            save_article(outlet_id, author_id)
 
         outlet_id = self.kwargs['outlet_id']
         outlet = Outlet.objects.filter(id=outlet_id)

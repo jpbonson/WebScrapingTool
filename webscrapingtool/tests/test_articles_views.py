@@ -1,6 +1,5 @@
 import json
 from django.urls import reverse
-from rest_framework.exceptions import ValidationError
 from restapi.models import Outlet, Author, Article
 from rest_framework import status
 from rest_framework.test import APITestCase
@@ -65,6 +64,28 @@ class ArticleTests(APITestCase):
         data['author_id'] = 1
         self.assertEqual(result, data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+    def test_create_non_unique_article_fails(self):
+        """
+        Ensure we can't create a new article if it already exists given and outlet and an author.
+        """
+        sample_outlet_id = 1
+        sample_author_id = 1
+        url = reverse('v1:article-list', kwargs={'outlet_id': sample_outlet_id})
+        data = {
+            'title': 'Lobisomens Contra-atacam',
+            'content': 'rg gergrgreherehr hergeer gerr',
+            'publication_date': '2051-11-13',
+            'outlet_id': sample_outlet_id,
+            'author_id': sample_author_id
+        }
+        self.client.post(url, data, format='json')
+        response = self.client.post(url, data, format='json')
+        self.assertEqual(
+            response.content.decode('utf-8'),
+            '["Article must be unique given the same outlet and author"]'
+        )
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_create_article_for_inexistent_outlet_fails(self):
         """
