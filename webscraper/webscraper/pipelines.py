@@ -28,9 +28,10 @@ class APIPipeline(object):
                 'link': data['link'],
                 'content': data['description'].encode('utf-8'),
                 'publication_date': APIPipeline.format_date(data['publish_date']),
+                'tags': data['categories'].encode('utf-8'),
                 'outlet_id': outlet_id,
-                'author_id': 1  # TODO
-            }  # TODO: add more fields
+                'author_id': 1  # TODO: fix author field
+            }
             headers = {'content-type': 'application/json'}
 
             response = requests.post(url, data=json.dumps(payload), headers=headers)

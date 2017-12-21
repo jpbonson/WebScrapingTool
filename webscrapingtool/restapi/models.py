@@ -28,6 +28,7 @@ class Article(models.Model):
     link = models.CharField(max_length=255, blank=True)
     content = models.TextField(blank=True, null=True)
     publication_date = models.DateField()
+    tags = models.CharField(max_length=255, blank=True)
 
     def __repr__(self):
         return "%s(%r)" % (self.__class__, self.__dict__)

@@ -27,7 +27,7 @@ class TechcrunchSpider(scrapy.Spider):
                 'publish_date': item[2],
                 'link': item[3],
                 'description': remove_tags(item[4]).replace(u'&nbsp;', u''),
-                'categories': [item[5]]  # TODO: fix this, should store all categories
+                'categories': item[5]
             }
 
             yield scraped_info

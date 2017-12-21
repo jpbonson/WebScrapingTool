@@ -57,6 +57,8 @@ class ArticleTests(APITestCase):
         response = self.client.post(url, data, format='json')
         result = json.loads(response.content)
         result.pop('id')
+        data['link'] = ''
+        data['tags'] = ''
         data.pop('outlet_id')
         data.pop('author_id')
         self.assertEqual(result, data)
