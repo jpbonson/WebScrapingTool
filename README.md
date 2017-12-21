@@ -20,7 +20,7 @@ export DJANGO_SETTINGS_MODULE=webscrapingtool.settings
 
 For API:
 ```
-python webscrapingtool/manage.py runserver
+python manage.py runserver
 ```
 
 For scraper:
@@ -31,7 +31,7 @@ scrapy crawl techcrunch
 ### How to test? ###
 
 ```
-python webscrapingtool/manage.py test
+python manage.py test
 ```
 
 ### API Routes (samples) ###
@@ -73,8 +73,8 @@ curl -d '{"name":"value1", "email":"value2"}' -H "Content-Type: application/json
 [x] Add other REST-compliant HTTP methods for the API (PUT, PATCH, POST, etc);
 [x] A server that resists to DDoS attacks;
 [x] Integrate with CI;
-[ ] Use automatic deploys;
 [ ] Provide an API endpoint to perform searches for articles;
+[ ] Use automatic deploys;
 
 ### Future Improvements:
 - reference models by hiperlinks instead of PKs
@@ -82,8 +82,7 @@ curl -d '{"name":"value1", "email":"value2"}' -H "Content-Type: application/json
 - allow scraper to do POSTs in batches, to improve write performance
 - add more tests for the 'sad' paths
 - improve Article's 'tags' so it stores an array of strings + scraper should get an array of 'categories'
+- use environment variables to config the application
 - maybe: 'title' should be unique in a given outlet
 - maybe: routes for authors/:authorId/articles
 - maybe: pagination
-
---
