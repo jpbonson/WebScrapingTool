@@ -30,7 +30,7 @@ class AuthorList(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         outlet_id = self.kwargs['outlet_id']
-        if not Outlet.objects.filter(id=outlet_id):
+        if not Outlet.objects.filter(id=outlet_id).exists():
             raise ValidationError("Outlet id does not exist")
         serializer.save(outlet_id=outlet_id)
 
@@ -61,17 +61,17 @@ class ArticleList(generics.ListCreateAPIView):
     def perform_create(self, serializer):
         outlet_id = self.kwargs['outlet_id']
         outlet = Outlet.objects.filter(id=outlet_id)
-        if not outlet:
+        if not outlet.exists():
             raise ValidationError("Outlet id does not exist")
         if 'author_id' in self.request.data:
             author_id = self.request.data['author_id']
-            if not Author.objects.filter(id=author_id):
+            if not Author.objects.filter(id=author_id).exists():
                 raise ValidationError("Author id does not exist")
             serializer.save(outlet_id=outlet_id, author_id=author_id)
         elif 'author' in self.request.data:
             author = self.request.data['author']
             result = Author.objects.filter(name=author).values()
-            if not result:
+            if not result.exists():
                 author_id = Author.objects.create(name=author, outlet_id=outlet_id).id
             else:
                 author_id = result[0]['id']
