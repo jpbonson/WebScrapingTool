@@ -86,7 +86,14 @@ if 'test' in sys.argv:
     }
 elif os.environ.get('ENV_NAME') == 'prod':
     DATABASES = {
-        'default': dj_database_url.config()
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'd2v2suimijab7n',
+            'USER': 'xsnuhdfgtoqwhs',
+            'PASSWORD': '08674fea1b668c97a5321b47c86d897ca86cd29b2d086db4c2abc81db3c09fed',
+            'HOST': 'ec2-54-83-46-116.compute-1.amazonaws.com',
+            'PORT': '5432',
+        }
     }
 else:
     DATABASES = {
