@@ -62,6 +62,7 @@ class ArticleTests(APITestCase):
         data['tags'] = ''
         data.pop('outlet_id')
         data.pop('author_id')
+        data['author_id'] = 1
         self.assertEqual(result, data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
@@ -117,15 +118,14 @@ class ArticleTests(APITestCase):
         }
         response = self.client.post(url, data, format='json')
         result = json.loads(response.content)
-        article = Article.objects.filter(id=result['id']).values()[0]
         result.pop('id')
         data['link'] = ''
         data['tags'] = ''
         data.pop('outlet_id')
         data.pop('author')
+        data['author_id'] = 1
         self.assertEqual(result, data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(article['author_id'], 1)
 
     def test_create_article_with_author_name_that_doesnt_exists(self):
         """
@@ -144,7 +144,6 @@ class ArticleTests(APITestCase):
         }
         response = self.client.post(url, data, format='json')
         result = json.loads(response.content)
-        article = Article.objects.filter(id=result['id']).values()[0]
         author = Author.objects.filter(name=sample_author_name).values()[0]
         expected_author = {
             'email': None, 'id': 4, 'name': 'Pablo', 'outlet_id': 1, 'profile_page': None
@@ -154,9 +153,9 @@ class ArticleTests(APITestCase):
         data['tags'] = ''
         data.pop('outlet_id')
         data.pop('author')
+        data['author_id'] = author['id']
         self.assertEqual(result, data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(article['author_id'], author['id'])
         self.assertEqual(author, expected_author)
 
     def test_list_articles(self):
