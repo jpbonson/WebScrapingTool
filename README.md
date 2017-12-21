@@ -63,7 +63,7 @@ curl -d '{"name":"value1", "email":"value2"}' -H "Content-Type: application/json
 [x] An (oversimplified) example of API response for articles: http://www.ckl.io/challenge/.
 [x] Create a pull-request and assign it to @carolschmitz.
 [ ] Host the server and provide its IP, as well as all the endpoint(s)  (https://devcenter.heroku.com/articles/getting-started-with-python#introduction);
-    [x] Chenge python version to 3.6
+    [x] Change python version to 3.6
     [x] Change the database to postgresql
 [ ] It should scrape constantly
 
