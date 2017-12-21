@@ -84,3 +84,4 @@ curl -d '{"name":"value1", "email":"value2"}' -H "Content-Type: application/json
 - improve Article's 'tags' so it stores an array of strings + scraper should get an array of 'categories'
 - maybe: 'title' should be unique in a given outlet
 - maybe: routes for authors/:authorId/articles
+- maybe: pagination
