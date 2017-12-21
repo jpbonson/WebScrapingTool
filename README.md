@@ -9,7 +9,7 @@ Python. Django. SQLite3. Scrapy.
 ### How to install? ###
 
 ```
-sudo apt-get install python-dev python-pip libxml2-dev libxslt1-dev zlib1g-dev libffi-dev libssl-dev python3 python3-dev libpq-dev postgresql postgresql-contrib
+sudo apt-get install python-dev python-pip libxml2-dev libxslt1-dev zlib1g-dev libffi-dev libssl-dev python3 python3-dev libpq-dev postgresql postgresql-contrib nginx
 pipenv install
 python manage.py makemigrations
 python manage.py migrate
@@ -65,6 +65,7 @@ curl -d '{"name":"value1", "email":"value2"}' -H "Content-Type: application/json
 [ ] Host the server and provide its IP, as well as all the endpoint(s)  (https://devcenter.heroku.com/articles/getting-started-with-python#introduction);
     [x] Change python version to 3.6
     [x] Change the database to postgresql
+    [x] Push code to heroku and setup the database
 [ ] It should scrape constantly
 
 ##### Extras
@@ -79,7 +80,6 @@ curl -d '{"name":"value1", "email":"value2"}' -H "Content-Type: application/json
 
 ### Future Improvements:
 - generate a good documentation
-- change server to a more robust one
 - reference models by hiperlinks instead of PKs
 - reorganize tests to use factories, to avoid duplicated code
 - allow scraper to do POSTs in batches, to improve write performance

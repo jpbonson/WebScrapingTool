@@ -1,1 +1,1 @@
-web: ENV_NAME=prod python webscrapingtool/manage.py runserver
+web: cd webscrapingtool; ENV_NAME=prod gunicorn webscrapingtool.wsgi; cd ..
