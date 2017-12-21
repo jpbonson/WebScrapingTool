@@ -56,7 +56,7 @@ class ArticleTests(APITestCase):
             'author_id': sample_author_id
         }
         response = self.client.post(url, data, format='json')
-        result = json.loads(response.content)
+        result = json.loads(response.content.decode('utf-8'))
         result.pop('id')
         data['link'] = ''
         data['tags'] = ''
@@ -81,7 +81,7 @@ class ArticleTests(APITestCase):
             'author_id': sample_author_id
         }
         response = self.client.post(url, data, format='json')
-        self.assertEqual(response.content, '["Outlet id does not exist"]')
+        self.assertEqual(response.content.decode('utf-8'), '["Outlet id does not exist"]')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_create_article_for_inexistent_author_fails(self):
@@ -99,7 +99,7 @@ class ArticleTests(APITestCase):
             'author_id': sample_author_id
         }
         response = self.client.post(url, data, format='json')
-        self.assertEqual(response.content, '["Author id does not exist"]')
+        self.assertEqual(response.content.decode('utf-8'), '["Author id does not exist"]')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_create_article_with_author_name_that_exists(self):
@@ -117,7 +117,7 @@ class ArticleTests(APITestCase):
             'author': sample_author_name
         }
         response = self.client.post(url, data, format='json')
-        result = json.loads(response.content)
+        result = json.loads(response.content.decode('utf-8'))
         result.pop('id')
         data['link'] = ''
         data['tags'] = ''
@@ -143,7 +143,7 @@ class ArticleTests(APITestCase):
             'author': sample_author_name
         }
         response = self.client.post(url, data, format='json')
-        result = json.loads(response.content)
+        result = json.loads(response.content.decode('utf-8'))
         author = Author.objects.filter(name=sample_author_name).values()[0]
         expected_author = {
             'email': None, 'id': 4, 'name': 'Pablo', 'outlet_id': 1, 'profile_page': None
@@ -165,9 +165,9 @@ class ArticleTests(APITestCase):
         sample_outlet_id = 1
         url = reverse('v1:article-list', kwargs={'outlet_id': sample_outlet_id})
         response = self.client.get(url)
-        result = map(lambda x: x['title'], json.loads(response.content))
+        result = map(lambda x: x['title'], json.loads(response.content.decode('utf-8')))
         expected = map(lambda x: x.title, list(Article.objects.filter(outlet_id=sample_outlet_id)))
-        self.assertEqual(result, expected)
+        self.assertEqual(list(result), list(expected))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_get_article(self):
@@ -180,7 +180,7 @@ class ArticleTests(APITestCase):
             'outlet_id': sample_outlet_id, 'article_id': sample_id
         })
         response = self.client.get(url)
-        result = json.loads(response.content)
+        result = json.loads(response.content.decode('utf-8'))
         expected = Article.objects.get(id=sample_id)
         self.assertEqual(result['title'], expected.title)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -203,7 +203,7 @@ class ArticleTests(APITestCase):
             'author_id': sample_author_id
         }
         response = self.client.put(url, data, format='json')
-        result = json.loads(response.content)
+        result = json.loads(response.content.decode('utf-8'))
         expected = Article.objects.get(id=sample_id)
         self.assertEqual(result['title'], expected.title)
         self.assertEqual(result['content'], expected.content)
@@ -220,7 +220,7 @@ class ArticleTests(APITestCase):
         })
         data = {'title': 'Violinos e Girafas'}
         response = self.client.patch(url, data, format='json')
-        result = json.loads(response.content)
+        result = json.loads(response.content.decode('utf-8'))
         expected = Article.objects.get(id=sample_id)
         self.assertEqual(result['title'], expected.title)
         self.assertEqual(result['content'], expected.content)
@@ -237,7 +237,7 @@ class ArticleTests(APITestCase):
         })
         response = self.client.delete(url)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
-        self.assertEqual(response.content, '')
+        self.assertEqual(response.content.decode('utf-8'), '')
         with self.assertRaises(Exception) as context:
             Article.objects.get(id=sample_id)
-        self.assertTrue('Article matching query does not exist.' in context.exception)
+        self.assertEqual('Article matching query does not exist.', str(context.exception))

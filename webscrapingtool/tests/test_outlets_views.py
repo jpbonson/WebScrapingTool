@@ -17,7 +17,7 @@ class OutletTests(APITestCase):
         url = reverse('v1:outlet-list')
         data = {'name': 'NiceNews', 'website': 'news.com', 'description': 'cool website'}
         response = self.client.post(url, data, format='json')
-        result = json.loads(response.content)
+        result = json.loads(response.content.decode('utf-8'))
         result.pop('id')
         self.assertEqual(result, data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
@@ -28,9 +28,9 @@ class OutletTests(APITestCase):
         """
         url = reverse('v1:outlet-list')
         response = self.client.get(url)
-        result = map(lambda x: x['name'], json.loads(response.content))
+        result = map(lambda x: x['name'], json.loads(response.content.decode('utf-8')))
         expected = map(lambda x: x.name, list(Outlet.objects.all()))
-        self.assertEqual(result, expected)
+        self.assertEqual(list(result), list(expected))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_get_outlet(self):
@@ -40,7 +40,7 @@ class OutletTests(APITestCase):
         sample_id = 1
         url = reverse('v1:outlet-detail', kwargs={'outlet_id': sample_id})
         response = self.client.get(url)
-        result = json.loads(response.content)
+        result = json.loads(response.content.decode('utf-8'))
         expected = Outlet.objects.get(id=sample_id)
         self.assertEqual(result['name'], expected.name)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -53,7 +53,7 @@ class OutletTests(APITestCase):
         url = reverse('v1:outlet-detail', kwargs={'outlet_id': sample_id})
         data = {'name': 'NewNews', 'website': 'news2.com', 'description': ''}
         response = self.client.put(url, data, format='json')
-        result = json.loads(response.content)
+        result = json.loads(response.content.decode('utf-8'))
         expected = Outlet.objects.get(id=sample_id)
         self.assertEqual(result['name'], expected.name)
         self.assertEqual(result['website'], expected.website)
@@ -68,7 +68,7 @@ class OutletTests(APITestCase):
         url = reverse('v1:outlet-detail', kwargs={'outlet_id': sample_id})
         data = {'name': 'NewNews'}
         response = self.client.patch(url, data, format='json')
-        result = json.loads(response.content)
+        result = json.loads(response.content.decode('utf-8'))
         expected = Outlet.objects.get(id=sample_id)
         self.assertEqual(result['name'], expected.name)
         self.assertEqual(result['website'], expected.website)
@@ -82,7 +82,7 @@ class OutletTests(APITestCase):
         url = reverse('v1:outlet-detail', kwargs={'outlet_id': sample_id})
         response = self.client.delete(url)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
-        self.assertEqual(response.content, '')
+        self.assertEqual(response.content.decode('utf-8'), '')
         with self.assertRaises(Exception) as context:
             Outlet.objects.get(id=sample_id)
-        self.assertTrue('Outlet matching query does not exist.' in context.exception)
+        self.assertEqual('Outlet matching query does not exist.', str(context.exception))

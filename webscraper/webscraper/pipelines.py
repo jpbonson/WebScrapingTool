@@ -24,16 +24,15 @@ class APIPipeline(object):
             url = 'http://{host}:{port}/v1/outlets/{outlet_id}/articles/'.format(
                 host=host, port=port, outlet_id=outlet_id)
             payload = {
-                'title': data['title'].encode('utf-8'),
+                'title': data['title'],
                 'link': data['link'],
-                'content': data['description'].encode('utf-8'),
+                'content': data['description'],
                 'publication_date': APIPipeline.format_date(data['publish_date']),
-                'tags': data['categories'].encode('utf-8'),
+                'tags': data['categories'],
                 'outlet_id': outlet_id,
-                'author': data['author'].encode('utf-8')
+                'author': data['author']
             }
             headers = {'content-type': 'application/json'}
-
             response = requests.post(url, data=json.dumps(payload), headers=headers)
 
             logging.debug('Data sent to API, response {0}'.format(str(response)))
