@@ -4,21 +4,33 @@ import json
 import requests
 import datetime
 import logging
+from collections import defaultdict
 from scrapy.exceptions import DropItem
 
 
 class APIPipeline(object):
+    report = {
+        'total': 0,
+        'invalid': 0,
+        'valid': 0,
+        'status': defaultdict(int)
+    }
+
     def process_item(self, item, spider):
         host = 'localhost'
         port = 8000
         outlet_id = 1
+        APIPipeline.report['total'] += 1
 
         valid = True
         for data in item:
             if not data:
                 valid = False
+                APIPipeline.report['invalid'] += 1
                 raise DropItem("Missing {0}!".format(data))
         if valid:
+            APIPipeline.report['valid'] += 1
+
             data = dict(item)
 
             url = 'http://{host}:{port}/v1/outlets/{outlet_id}/articles/'.format(
@@ -35,7 +47,11 @@ class APIPipeline(object):
             headers = {'content-type': 'application/json'}
             response = requests.post(url, data=json.dumps(payload), headers=headers)
 
+            APIPipeline.report['status'][response.status_code] += 1
+
             logging.debug('Data sent to API, response {0}'.format(str(response)))
+
+        logging.debug('API report: {0}'.format(str(APIPipeline.report)))
         return item
 
     @staticmethod

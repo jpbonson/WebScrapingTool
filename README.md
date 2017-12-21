@@ -62,9 +62,9 @@ curl -d '{"name":"value1", "email":"value2"}' -H "Content-Type: application/json
 [x] Create a JSON REST API endpoints that serve the database data (outlets, authors and articles) - only GET is necessary;
 [x] An (oversimplified) example of API response for articles: http://www.ckl.io/challenge/.
 [x] Create a pull-request and assign it to @carolschmitz.
-[ ] Host the server and provide its IP, as well as all the endpoint(s);
-    [ ] Change the database to postgresql (https://devcenter.heroku.com/articles/getting-started-with-python#introduction)
-    [ ] Chenge python version to 3.6 (https://devcenter.heroku.com/articles/getting-started-with-python#introduction)
+[ ] Host the server and provide its IP, as well as all the endpoint(s)  (https://devcenter.heroku.com/articles/getting-started-with-python#introduction);
+    [x] Chenge python version to 3.6
+    [ ] Change the database to postgresql
 [ ] It should scrape constantly
 
 ##### Extras
@@ -84,6 +84,7 @@ curl -d '{"name":"value1", "email":"value2"}' -H "Content-Type: application/json
 - add more tests for the 'sad' paths
 - improve Article's 'tags' so it stores an array of strings + scraper should get an array of 'categories'
 - use environment variables to config the application
+- use config files to config the application
 - maybe: 'title' should be unique in a given outlet
 - maybe: routes for authors/:authorId/articles
 - maybe: pagination
