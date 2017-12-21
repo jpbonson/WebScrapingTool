@@ -1,13 +1,16 @@
 # -*- coding: utf-8 -*-
 
-from scrapy.exceptions import DropItem
-from scrapy import log
 import json
 import requests
+import datetime
+import logging
+from scrapy.exceptions import DropItem
 
 
 class APIPipeline(object):
     def process_item(self, item, spider):
+        host = 'localhost'
+        port = 8000
         outlet_id = 1
 
         valid = True
@@ -18,11 +21,12 @@ class APIPipeline(object):
         if valid:
             data = dict(item)
 
-            url = 'http://localhost:8000/outlets/' + str(outlet_id) + '/articles/'  # TODO
+            url = 'http://{host}:{port}/outlets/{outlet_id}/articles/'.format(
+                host=host, port=port, outlet_id=outlet_id)
             payload = {
                 'title': data['title'].encode('utf-8'),
                 'content': data['description'].encode('utf-8'),
-                'publication_date': '2001-12-30',  # TODO
+                'publication_date': APIPipeline.format_date(data['publish_date']),
                 'outlet_id': outlet_id,
                 'author_id': 1  # TODO
             }  # TODO: add more fields
@@ -30,6 +34,11 @@ class APIPipeline(object):
 
             response = requests.post(url, data=json.dumps(payload), headers=headers)
 
-            log.msg("Data sent to API, response: " + str(response),
-                    level=log.DEBUG, spider=spider)
+            logging.debug('Data sent to API, response {r}'.format(r=str(response)))
         return item
+
+    @staticmethod
+    def format_date(original_date):
+        simple_date = ' '.join(original_date.split()[1:4])
+        formatted_date = datetime.datetime.strptime(simple_date, "%d %b %Y")
+        return formatted_date.strftime("%Y-%m-%d")
