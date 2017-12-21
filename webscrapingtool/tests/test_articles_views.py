@@ -101,6 +101,64 @@ class ArticleTests(APITestCase):
         self.assertEqual(response.content, '["Author id does not exist"]')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
+    def test_create_article_with_author_name_that_exists(self):
+        """
+        Ensure we can create a new article object given an author name instead of an id.
+        """
+        sample_outlet_id = 1
+        sample_author_name = "Ana"
+        url = reverse('article-list', kwargs={'outlet_id': sample_outlet_id})
+        data = {
+            'title': 'Lobisomens Contra-atacam',
+            'content': 'rg gergrgreherehr hergeer gerr',
+            'publication_date': '2051-11-13',
+            'outlet_id': sample_outlet_id,
+            'author': sample_author_name
+        }
+        response = self.client.post(url, data, format='json')
+        result = json.loads(response.content)
+        article = Article.objects.filter(id=result['id']).values()[0]
+        result.pop('id')
+        data['link'] = ''
+        data['tags'] = ''
+        data.pop('outlet_id')
+        data.pop('author')
+        self.assertEqual(result, data)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(article['author_id'], 1)
+
+    def test_create_article_with_author_name_that_doesnt_exists(self):
+        """
+        Ensure we can create a new article object given an author name instead of an id.
+        If the author does not exist, it is created.
+        """
+        sample_outlet_id = 1
+        sample_author_name = "Pablo"
+        url = reverse('article-list', kwargs={'outlet_id': sample_outlet_id})
+        data = {
+            'title': 'Lobisomens Contra-atacam',
+            'content': 'rg gergrgreherehr hergeer gerr',
+            'publication_date': '2051-11-13',
+            'outlet_id': sample_outlet_id,
+            'author': sample_author_name
+        }
+        response = self.client.post(url, data, format='json')
+        result = json.loads(response.content)
+        article = Article.objects.filter(id=result['id']).values()[0]
+        author = Author.objects.filter(name=sample_author_name).values()[0]
+        expected_author = {
+            'email': None, 'id': 4, 'name': 'Pablo', 'outlet_id': 1, 'profile_page': None
+        }
+        result.pop('id')
+        data['link'] = ''
+        data['tags'] = ''
+        data.pop('outlet_id')
+        data.pop('author')
+        self.assertEqual(result, data)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(article['author_id'], author['id'])
+        self.assertEqual(author, expected_author)
+
     def test_list_articles(self):
         """
         Ensure we can list article objects.

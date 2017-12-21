@@ -14,7 +14,7 @@ class Outlet(models.Model):
 class Author(models.Model):
     outlet = models.ForeignKey(Outlet, related_name='author_outlets', on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
-    email = models.CharField(max_length=255)
+    email = models.CharField(max_length=255, null=True)
     profile_page = models.CharField(max_length=255, null=True)
 
     def __repr__(self):

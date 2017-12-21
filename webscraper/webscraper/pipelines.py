@@ -30,7 +30,7 @@ class APIPipeline(object):
                 'publication_date': APIPipeline.format_date(data['publish_date']),
                 'tags': data['categories'].encode('utf-8'),
                 'outlet_id': outlet_id,
-                'author_id': 1  # TODO: fix author field
+                'author': data['author'].encode('utf-8')
             }
             headers = {'content-type': 'application/json'}
 

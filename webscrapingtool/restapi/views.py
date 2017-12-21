@@ -60,12 +60,24 @@ class ArticleList(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         outlet_id = self.kwargs['outlet_id']
-        if not Outlet.objects.filter(id=outlet_id):
+        outlet = Outlet.objects.filter(id=outlet_id)
+        if not outlet:
             raise ValidationError("Outlet id does not exist")
-        author_id = self.request.data['author_id']
-        if not Author.objects.filter(id=author_id):
-            raise ValidationError("Author id does not exist")
-        serializer.save(outlet_id=outlet_id, author_id=author_id)
+        if 'author_id' in self.request.data:
+            author_id = self.request.data['author_id']
+            if not Author.objects.filter(id=author_id):
+                raise ValidationError("Author id does not exist")
+            serializer.save(outlet_id=outlet_id, author_id=author_id)
+        elif 'author' in self.request.data:
+            author = self.request.data['author']
+            result = Author.objects.filter(name=author).values()
+            if not result:
+                author_id = Author.objects.create(name=author, outlet_id=outlet_id).id
+            else:
+                author_id = result[0]['id']
+            serializer.save(outlet_id=outlet_id, author_id=author_id)
+        else:
+            raise ValidationError("Must inform either 'author_id' or 'author'")
 
     def get_queryset(self):
         outlet = self.kwargs['outlet_id']
