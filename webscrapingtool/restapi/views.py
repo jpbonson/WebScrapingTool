@@ -1,4 +1,5 @@
 from rest_framework import generics
+from rest_framework.exceptions import ValidationError
 from .models import Outlet, Author, Article
 from .serializers import OutletSerializer, AuthorSerializer, ArticleSerializer
 
@@ -28,7 +29,10 @@ class AuthorList(generics.ListCreateAPIView):
     lookup_url_kwarg = 'outlet_id'
 
     def perform_create(self, serializer):
-        serializer.save(outlet_id=self.kwargs['outlet_id'])
+        outlet_id = self.kwargs['outlet_id']
+        if not Outlet.objects.filter(id=outlet_id):
+            raise ValidationError("Outlet id does not exist")
+        serializer.save(outlet_id=outlet_id)
 
     def get_queryset(self):
         outlet = self.kwargs['outlet_id']
@@ -56,7 +60,11 @@ class ArticleList(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         outlet_id = self.kwargs['outlet_id']
+        if not Outlet.objects.filter(id=outlet_id):
+            raise ValidationError("Outlet id does not exist")
         author_id = self.request.data['author_id']
+        if not Author.objects.filter(id=author_id):
+            raise ValidationError("Author id does not exist")
         serializer.save(outlet_id=outlet_id, author_id=author_id)
 
     def get_queryset(self):

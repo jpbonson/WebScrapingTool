@@ -29,6 +29,17 @@ class AuthorTests(APITestCase):
         self.assertEqual(result, data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
+    def test_create_author_for_inexistent_outlet_fails(self):
+        """
+        Ensure we can't create a new author if the outlet id doesn't exist.
+        """
+        sample_outlet_id = 11111
+        url = reverse('author-list', kwargs={'outlet_id': sample_outlet_id})
+        data = {'name': 'Ricardo', 'email': 'ricardao@news.com', 'outlet_id': sample_outlet_id}
+        response = self.client.post(url, data, format='json')
+        self.assertEqual(response.content, '["Outlet id does not exist"]')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
     def test_list_authors(self):
         """
         Ensure we can list author objects.
