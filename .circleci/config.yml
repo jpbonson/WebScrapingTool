@@ -4,6 +4,9 @@ jobs:
     working_directory: ~/webscrapingtool
     docker:
       - image: circleci/python:2.7
+    dependencies:
+      pre:
+        - sudo apt-get update; sudo apt-get install python-dev python-pip libxml2-dev libxslt1-dev zlib1g-dev libffi-dev libssl-dev python3 python3-dev
     steps:
       - checkout
       - restore_cache:
