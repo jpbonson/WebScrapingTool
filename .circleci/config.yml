@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: ~/webscrapingtool
     docker:
-      - image: circleci/python:3.5.2
+      - image: circleci/python:3.5
 
     steps:
       - checkout
