@@ -59,16 +59,13 @@ class ArticleList(generics.ListCreateAPIView):
     lookup_url_kwarg1 = 'outlet_id'
 
     def perform_create(self, serializer):
-        outlet_id = self.kwargs['outlet_id']
-        outlet = Outlet.objects.filter(id=outlet_id)
-        if not outlet.exists():
-            raise ValidationError("Outlet id does not exist")
-        if 'author_id' in self.request.data:
+        def check_and_save_for_author_id():
             author_id = self.request.data['author_id']
             if not Author.objects.filter(id=author_id).exists():
                 raise ValidationError("Author id does not exist")
             serializer.save(outlet_id=outlet_id, author_id=author_id)
-        elif 'author' in self.request.data:
+
+        def check_and_save_for_author_name():
             author = self.request.data['author']
             result = Author.objects.filter(name=author).values()
             if not result.exists():
@@ -76,6 +73,15 @@ class ArticleList(generics.ListCreateAPIView):
             else:
                 author_id = result[0]['id']
             serializer.save(outlet_id=outlet_id, author_id=author_id)
+
+        outlet_id = self.kwargs['outlet_id']
+        outlet = Outlet.objects.filter(id=outlet_id)
+        if not outlet.exists():
+            raise ValidationError("Outlet id does not exist")
+        if 'author_id' in self.request.data:
+            check_and_save_for_author_id()
+        elif 'author' in self.request.data:
+            check_and_save_for_author_name()
         else:
             raise ValidationError("Must inform either 'author_id' or 'author'")
 
