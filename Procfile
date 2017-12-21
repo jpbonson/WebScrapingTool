@@ -1,1 +1,1 @@
-web: python webscrapingtool/manage.py runserver
+web: ENV_NAME=prod python webscrapingtool/manage.py runserver
