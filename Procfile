@@ -1,0 +1,1 @@
+web: python webscrapingtool/manage.py runserver

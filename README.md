@@ -78,6 +78,8 @@ curl -d '{"name":"value1", "email":"value2"}' -H "Content-Type: application/json
 [ ] Use automatic deploys;
 
 ### Future Improvements:
+- generate a good documentation
+- change server to a more robust one
 - reference models by hiperlinks instead of PKs
 - reorganize tests to use factories, to avoid duplicated code
 - allow scraper to do POSTs in batches, to improve write performance
