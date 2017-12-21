@@ -20,7 +20,7 @@ export DJANGO_SETTINGS_MODULE=webscrapingtool.settings
 
 For API:
 ```
-python manage.py runserver
+gunicorn webscrapingtool.wsgi
 ```
 
 For scraper:
@@ -34,21 +34,63 @@ scrapy crawl techcrunch
 python manage.py test
 ```
 
-### API Routes (samples) ###
+### API Routes ###
 
-curl http://localhost:8000/outlets/
+Heroku: https://powerful-fjord-44213.herokuapp.com/
 
-curl -d '{"name":"value1", "website":"value2", "description":"blah"}' -H "Content-Type: application/json" -X POST http://localhost:8000/outlets/
+##### Outlets
 
-curl http://localhost:8000/outlets/1/
+- GET (list)
+curl https://powerful-fjord-44213.herokuapp.com/v1/outlets/
 
-curl -d '{"name":"value1", "website":"value3", "description":"blah"}' -H "Content-Type: application/json" -X PUT http://localhost:8000/outlets/1/
+- POST (create)
+curl -d '{"name":"value1", "website":"value2", "description":"blah"}' -H "Content-Type: application/json" -X POST https://powerful-fjord-44213.herokuapp.com/v1/outlets/
 
-curl -X "DELETE" http://localhost:8000/outlets/2/
+- GET (individual)
+curl https://powerful-fjord-44213.herokuapp.com/v1/outlets/1/
 
-curl http://localhost:8000/outlets/1/authors/
+- PUT/PATCH (update)
+curl -d '{"name":"value1", "website":"value3", "description":"blah"}' -H "Content-Type: application/json" -X PUT https://powerful-fjord-44213.herokuapp.com/v1/outlets/1/
 
-curl -d '{"name":"value1", "email":"value2"}' -H "Content-Type: application/json" -X POST http://localhost:8000/outlets/1/authors/
+- DELETE (remove)
+curl -X "DELETE" https://powerful-fjord-44213.herokuapp.com/v1/outlets/1/
+
+##### Authors
+
+- GET (list)
+curl https://powerful-fjord-44213.herokuapp.com/v1/outlets/1/authors/
+
+- POST (create)
+curl -d '{"name":"Ana", "email":"ana@gmail.com"}' -H "Content-Type: application/json" -X POST https://powerful-fjord-44213.herokuapp.com/v1/outlets/1/authors/
+
+- GET (individual)
+curl https://powerful-fjord-44213.herokuapp.com/v1/outlets/1/authors/1/
+
+- PUT/PATCH (update)
+curl -d '{"name":"Ana Maria", "email":"ana@gmail.com"}' -H "Content-Type: application/json" -X PUT https://powerful-fjord-44213.herokuapp.com/v1/outlets/1/authors/1/
+
+- DELETE (remove)
+curl -X "DELETE" https://powerful-fjord-44213.herokuapp.com/v1/outlets/1/authors/1/
+
+##### Articles
+
+- GET (list)
+curl https://powerful-fjord-44213.herokuapp.com/v1/outlets/1/articles/
+
+- POST (create using author_id, author_id must exist. Articles must be unique given (title, outlet, author).)
+curl -d '{"title":"A Arte de Dormir", "content":"rh hrehe ehryey", "publication_date": "2001-12-30", "author_id": 1}' -H "Content-Type: application/json" -X POST https://powerful-fjord-44213.herokuapp.com/v1/outlets/1/articles/
+
+- POST (create using author name, author will be created if it does not exist. Articles must be unique given (title, outlet, author).)
+curl -d '{"title":"Oceano Raso", "content":"rg egrg gergeg", "publication_date": "2023-11-03", "author": "Fernando"}' -H "Content-Type: application/json" -X POST https://powerful-fjord-44213.herokuapp.com/v1/outlets/1/articles/
+
+- GET (individual)
+curl https://powerful-fjord-44213.herokuapp.com/v1/outlets/1/articles/1/
+
+- PUT/PATCH (update)
+curl -d '{"title":"Oceano Super Raso", "content":"rg egrg gergeg", "publication_date": "2023-11-03", "author_id": 2}' -H "Content-Type: application/json" -X PUT https://powerful-fjord-44213.herokuapp.com/v1/outlets/1/articles/2/
+
+- DELETE (remove)
+curl -X "DELETE" https://powerful-fjord-44213.herokuapp.com/v1/outlets/1/articles/1/
 
 ### Challenge Checklist
 
@@ -62,10 +104,11 @@ curl -d '{"name":"value1", "email":"value2"}' -H "Content-Type: application/json
 [x] Create a JSON REST API endpoints that serve the database data (outlets, authors and articles) - only GET is necessary;
 [x] An (oversimplified) example of API response for articles: http://www.ckl.io/challenge/.
 [x] Create a pull-request and assign it to @carolschmitz.
-[ ] Host the server and provide its IP, as well as all the endpoint(s)  (https://devcenter.heroku.com/articles/getting-started-with-python#introduction);
+[x] Host the server and provide its IP, as well as all the endpoint(s)  (https://devcenter.heroku.com/articles/getting-started-with-python#introduction);
     [x] Change python version to 3.6
     [x] Change the database to postgresql
     [x] Push code to heroku and setup the database
+    [x] API running on heroku
 [ ] It should scrape constantly
 
 ##### Extras
