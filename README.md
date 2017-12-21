@@ -63,7 +63,7 @@ curl -d '{"name":"value1", "email":"value2"}' -H "Content-Type: application/json
 [x] An (oversimplified) example of API response for articles: http://www.ckl.io/challenge/.
 [x] Create a pull-request and assign it to @carolschmitz.
 [ ] It should scrape constantly
-[ ] Host the server and provide its IP (Heroku?), as well as all the endpoint(s);
+[ ] Host the server and provide its IP, as well as all the endpoint(s);
 
 ##### Extras
 [x] Use cool GitHub libraries to aid the development;
