@@ -9,7 +9,7 @@ Python. Django. SQLite3. Scrapy.
 ### How to install? ###
 
 ```
-sudo apt-get install python-dev python-pip libxml2-dev libxslt1-dev zlib1g-dev libffi-dev libssl-dev python3 python3-dev
+sudo apt-get install python-dev python-pip libxml2-dev libxslt1-dev zlib1g-dev libffi-dev libssl-dev python3 python3-dev libpq-dev postgresql postgresql-contrib
 pip install -r requirements.txt
 python manage.py makemigrations
 python manage.py migrate
@@ -64,7 +64,7 @@ curl -d '{"name":"value1", "email":"value2"}' -H "Content-Type: application/json
 [x] Create a pull-request and assign it to @carolschmitz.
 [ ] Host the server and provide its IP, as well as all the endpoint(s)  (https://devcenter.heroku.com/articles/getting-started-with-python#introduction);
     [x] Chenge python version to 3.6
-    [ ] Change the database to postgresql
+    [x] Change the database to postgresql
 [ ] It should scrape constantly
 
 ##### Extras
