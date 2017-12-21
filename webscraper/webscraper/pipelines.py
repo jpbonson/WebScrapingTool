@@ -25,6 +25,7 @@ class APIPipeline(object):
                 host=host, port=port, outlet_id=outlet_id)
             payload = {
                 'title': data['title'].encode('utf-8'),
+                'link': data['link'],
                 'content': data['description'].encode('utf-8'),
                 'publication_date': APIPipeline.format_date(data['publish_date']),
                 'outlet_id': outlet_id,
@@ -34,7 +35,7 @@ class APIPipeline(object):
 
             response = requests.post(url, data=json.dumps(payload), headers=headers)
 
-            logging.debug('Data sent to API, response {r}'.format(r=str(response)))
+            logging.debug('Data sent to API, response {0}'.format(str(response)))
         return item
 
     @staticmethod

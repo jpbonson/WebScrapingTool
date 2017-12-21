@@ -25,6 +25,7 @@ class Article(models.Model):
     outlet = models.ForeignKey(Outlet, related_name='article_outlets', on_delete=models.CASCADE)
     author = models.ForeignKey(Author, related_name='article_authors', on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
+    link = models.CharField(max_length=255, blank=True)
     content = models.TextField(blank=True, null=True)
     publication_date = models.DateField()
 
