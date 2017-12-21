@@ -24,7 +24,7 @@ jobs:
       - run:
           command: |
             . venv/bin/activate
-            python webscrapingtool/manage.py test
+            cd webscrapingtool; python manage.py test; cd ..
       - store_artifacts:
           path: test-reports/
           destination: tr1
