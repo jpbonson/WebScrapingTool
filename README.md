@@ -20,7 +20,7 @@ export DJANGO_SETTINGS_MODULE=webscrapingtool.settings
 
 For API:
 ```
-python manage.py runserver
+python webscrapingtool/manage.py runserver
 ```
 
 For scraper:
@@ -31,7 +31,7 @@ scrapy crawl techcrunch
 ### How to test? ###
 
 ```
-python manage.py test
+python webscrapingtool/manage.py test
 ```
 
 ### API Routes (samples) ###
@@ -62,8 +62,9 @@ curl -d '{"name":"value1", "email":"value2"}' -H "Content-Type: application/json
 [x] Create a JSON REST API endpoints that serve the database data (outlets, authors and articles) - only GET is necessary;
 [x] An (oversimplified) example of API response for articles: http://www.ckl.io/challenge/.
 [x] Create a pull-request and assign it to @carolschmitz.
-[ ] It should scrape constantly
 [ ] Host the server and provide its IP, as well as all the endpoint(s);
+    [ ] Change the database to postgresql
+[ ] It should scrape constantly
 
 ##### Extras
 [x] Use cool GitHub libraries to aid the development;
@@ -71,15 +72,14 @@ curl -d '{"name":"value1", "email":"value2"}' -H "Content-Type: application/json
 [x] Use a dependency manager;
 [x] Add other REST-compliant HTTP methods for the API (PUT, PATCH, POST, etc);
 [x] A server that resists to DDoS attacks;
+[x] Integrate with CI;
 [ ] Use automatic deploys;
-[ ] Integrate with CI;
 [ ] Provide an API endpoint to perform searches for articles;
 
 ### Future Improvements:
 - reference models by hiperlinks instead of PKs
 - reorganize tests to use factories, to avoid duplicated code
 - allow scraper to do POSTs in batches, to improve write performance
-- change the DB to a better one, like postgres
 - add more tests for the 'sad' paths
 - improve Article's 'tags' so it stores an array of strings + scraper should get an array of 'categories'
 - maybe: 'title' should be unique in a given outlet
