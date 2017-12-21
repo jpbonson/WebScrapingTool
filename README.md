@@ -85,3 +85,5 @@ curl -d '{"name":"value1", "email":"value2"}' -H "Content-Type: application/json
 - maybe: 'title' should be unique in a given outlet
 - maybe: routes for authors/:authorId/articles
 - maybe: pagination
+
+--
