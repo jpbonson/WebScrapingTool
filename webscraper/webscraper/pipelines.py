@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import os
 import json
 import requests
 import datetime
@@ -18,8 +19,12 @@ class APIPipeline(object):
     }
 
     def process_item(self, item, spider):
-        host = 'localhost'
-        port = 8000
+        if os.environ.get('ENV_NAME') == 'prod':
+            host = 'powerful-fjord-44213.herokuapp.com'
+            port = 80
+        else:
+            host = 'localhost'
+            port = 8000
         outlet_id = 1
         APIPipeline.report['total'] += 1
 

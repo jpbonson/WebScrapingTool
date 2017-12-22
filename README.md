@@ -26,8 +26,14 @@ gunicorn webscrapingtool.wsgi
 ```
 
 For scraper (Python 2, uses the Pipfile inside webscraper):
+- local
 ```
-sh run_scraper.sh
+sh run_scraper_local.sh
+```
+
+- heroku
+```
+sh run_scraper_heroku.sh
 ```
 
 ### How to test? ###
