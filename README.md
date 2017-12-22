@@ -132,6 +132,7 @@ curl -X "DELETE" https://powerful-fjord-44213.herokuapp.com/v1/outlets/1/article
 
 ### Future Improvements:
 - improve the search articles feature to support more complex queries
+- allow sorting of results
 - generate a good documentation
 - reference models by hiperlinks instead of PKs
 - reorganize tests to use factories, to avoid duplicated code
