@@ -131,14 +131,12 @@ curl -X "DELETE" https://powerful-fjord-44213.herokuapp.com/v1/outlets/1/article
 [-] Use automatic deploys; (I couldn't finish this part on time, but I read about it and it seems I needed to use Bitbucket Pipelines to achieve this one.)
 
 ### Future Improvements:
-- improve the search articles feature
+- improve the search articles feature to support more complex queries
 - generate a good documentation
 - reference models by hiperlinks instead of PKs
 - reorganize tests to use factories, to avoid duplicated code
 - allow scraper to do POSTs in batches, to improve write performance
 - add more tests for the 'sad' paths
 - improve Article's 'tags' so it stores an array of strings + scraper should get an array of 'categories'
-- use environment variables to config the application
-- use config files to config the application
 - maybe: routes for authors/:authorId/articles
 - maybe: pagination
