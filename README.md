@@ -52,13 +52,13 @@ Heroku: https://powerful-fjord-44213.herokuapp.com/
 curl https://powerful-fjord-44213.herokuapp.com/v1/outlets/
 
 - POST (create)
-curl -d '{"name":"value1", "website":"value2", "description":"blah"}' -H "Content-Type: application/json" -X POST https://powerful-fjord-44213.herokuapp.com/v1/outlets/
+curl -d '{"name":"TechCrunch", "website":"https://techcrunch.com/", "description":"blah"}' -H "Content-Type: application/json" -X POST https://powerful-fjord-44213.herokuapp.com/v1/outlets/
 
 - GET (individual)
 curl https://powerful-fjord-44213.herokuapp.com/v1/outlets/1/
 
 - PUT/PATCH (update)
-curl -d '{"name":"value1", "website":"value3", "description":"blah"}' -H "Content-Type: application/json" -X PUT https://powerful-fjord-44213.herokuapp.com/v1/outlets/1/
+curl -d '{"name":"TechCrunch", "website":"https://techcrunch.com/", "description":"blah"}' -H "Content-Type: application/json" -X PUT https://powerful-fjord-44213.herokuapp.com/v1/outlets/1/
 
 - DELETE (remove)
 curl -X "DELETE" https://powerful-fjord-44213.herokuapp.com/v1/outlets/1/
@@ -69,7 +69,7 @@ curl -X "DELETE" https://powerful-fjord-44213.herokuapp.com/v1/outlets/1/
 curl https://powerful-fjord-44213.herokuapp.com/v1/outlets/1/authors/
 
 - POST (create)
-curl -d '{"name":"Ana", "email":"ana@gmail.com"}' -H "Content-Type: application/json" -X POST https://powerful-fjord-44213.herokuapp.com/v1/outlets/1/authors/
+curl -d '{"name":"Ana", "email":"ana@gmail.com", "profile_page":"some_url"}' -H "Content-Type: application/json" -X POST https://powerful-fjord-44213.herokuapp.com/v1/outlets/1/authors/
 
 - GET (individual)
 curl https://powerful-fjord-44213.herokuapp.com/v1/outlets/1/authors/1/
