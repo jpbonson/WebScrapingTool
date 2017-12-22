@@ -6,6 +6,8 @@ Currently only the spider for TechCrunch is available, but the project can be ex
 
 Python. Django. SQLite3. Scrapy.
 
+Observation: The API (webscrapingtool) is in Python 3, since it is the recommended version to use and the one compatible with Heroku. However, scraper (webscraper) only works for Python 2 due to a dependency with the package 'twisted', that wasn't migrated to Python3. Ideally they should live in different projects and be deployed separately. To avoid conflicts, in this repository only the API is deployed, while the scraper is used as a script.
+
 ### How to install? ###
 
 ```
@@ -18,20 +20,20 @@ export DJANGO_SETTINGS_MODULE=webscrapingtool.settings
 
 ### How to run? ###
 
-For API:
+For API (Python 3):
 ```
 gunicorn webscrapingtool.wsgi
 ```
 
-For scraper:
+For scraper (Python 2, uses the Pipfile inside webscraper):
 ```
-scrapy crawl techcrunch
+sh run_scraper.sh
 ```
 
 ### How to test? ###
 
 ```
-python manage.py test
+cd webscrapingtool; python manage.py test; cd ..
 ```
 
 ### API Routes ###

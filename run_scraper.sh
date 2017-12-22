@@ -1,0 +1,1 @@
+cd webscraper; scrapy crawl techcrunch; cd ..
