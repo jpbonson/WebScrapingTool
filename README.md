@@ -6,7 +6,7 @@ Currently only the spider for TechCrunch is available, but the project can be ex
 
 Python. Django. SQLite3. Scrapy.
 
-Observation: The API (webscrapingtool) is in Python 3, since it is the recommended version to use and the one compatible with Heroku. However, scraper (webscraper) only works for Python 2 due to a dependency with the package 'twisted', that wasn't migrated to Python3. Ideally they should live in different projects and be deployed separately. To avoid conflicts, in this repository only the API is deployed, while the scraper is used as a script.
+Observation: The API (webscrapingtool) is in Python 3, since it is the recommended version to use and the one compatible with Heroku. However, scraper (webscraper) only works for Python 2 due to a dependency with the package 'twisted', that wasn't migrated to Python3.
 
 ### How to install? ###
 
@@ -84,6 +84,7 @@ curl -X "DELETE" https://powerful-fjord-44213.herokuapp.com/v1/outlets/1/authors
 
 - GET (list)
 curl https://powerful-fjord-44213.herokuapp.com/v1/outlets/1/articles/
+curl https://powerful-fjord-44213.herokuapp.com/v1/outlets/1/articles/?title=guide
 
 - POST (create using author_id, author_id must exist. Articles must be unique given (title, outlet, author).)
 curl -d '{"title":"A Arte de Dormir", "content":"rh hrehe ehryey", "publication_date": "2001-12-30", "author_id": 1}' -H "Content-Type: application/json" -X POST https://powerful-fjord-44213.herokuapp.com/v1/outlets/1/articles/
@@ -117,7 +118,7 @@ curl -X "DELETE" https://powerful-fjord-44213.herokuapp.com/v1/outlets/1/article
     [x] Change the database to postgresql
     [x] Push code to heroku and setup the database
     [x] API running on heroku
-[ ] It should scrape constantly
+[x] It should scrape constantly
 
 ##### Extras
 [x] Use cool GitHub libraries to aid the development;
@@ -126,10 +127,11 @@ curl -X "DELETE" https://powerful-fjord-44213.herokuapp.com/v1/outlets/1/article
 [x] Add other REST-compliant HTTP methods for the API (PUT, PATCH, POST, etc);
 [x] A server that resists to DDoS attacks;
 [x] Integrate with CI;
-[ ] Provide an API endpoint to perform searches for articles;
-[ ] Use automatic deploys;
+[x] Provide an API endpoint to perform searches for articles;
+[-] Use automatic deploys; (I couldn't finish this part on time, but I read about it and it seems I needed to use Bitbucket Pipelines to achieve this one.)
 
 ### Future Improvements:
+- improve the search articles feature
 - generate a good documentation
 - reference models by hiperlinks instead of PKs
 - reorganize tests to use factories, to avoid duplicated code

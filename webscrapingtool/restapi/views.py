@@ -93,8 +93,14 @@ class ArticleList(generics.ListCreateAPIView):
             raise ValidationError("Must inform either 'author_id' or 'author'")
 
     def get_queryset(self):
-        outlet = self.kwargs['outlet_id']
-        return Article.objects.filter(outlet__id=outlet)
+        outlet_id = self.kwargs['outlet_id']
+        query = self.request.query_params
+        if query and 'title' in query:
+            return Article.objects.filter(
+                outlet_id=outlet_id,
+                title__icontains=query['title']
+            )
+        return Article.objects.filter(outlet__id=outlet_id)
 
 
 # GET    outlets/<outlet_id>/articles/<article_id>/: return a Article

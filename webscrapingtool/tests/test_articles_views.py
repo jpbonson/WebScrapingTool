@@ -191,6 +191,30 @@ class ArticleTests(APITestCase):
         self.assertEqual(list(result), list(expected))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
+    def test_list_articles_with_query(self):
+        """
+        Ensure we can list article objects based on a query.
+        """
+        sample_outlet_id = 1
+        url = reverse('v1:article-list', kwargs={'outlet_id': sample_outlet_id})
+        url += "?title=eu"
+        response = self.client.get(url)
+        result = map(lambda x: x['title'], json.loads(response.content.decode('utf-8')))
+        self.assertEqual(list(result), ['New York e Eu'])
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_list_articles_with_query2(self):
+        """
+        Ensure we can list article objects based on a query.
+        """
+        sample_outlet_id = 1
+        url = reverse('v1:article-list', kwargs={'outlet_id': sample_outlet_id})
+        url += "?title=e"
+        response = self.client.get(url)
+        result = map(lambda x: x['title'], json.loads(response.content.decode('utf-8')))
+        self.assertEqual(list(result), ['Startups e o Apocalipe', 'New York e Eu'])
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
     def test_get_article(self):
         """
         Ensure we can get an article object.
