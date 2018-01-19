@@ -1,3 +1,5 @@
+[![Build Status](https://circleci.com/gh/jpbonson/WebScrapingTool.svg?style=shield&circle-token=:circle-token)](https://circleci.com/gh/jpbonson/)
+
 # Web Scraping Tool #
 
 Web Scraping Tool is a set of two applications: An extensible web scraper (Scrapy) and an API that serves what was scraped.
