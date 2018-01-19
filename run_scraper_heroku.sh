@@ -1,0 +1,1 @@
+cd webscraper; ENV_NAME=prod scrapy crawl techcrunch; cd ..

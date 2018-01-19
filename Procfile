@@ -1,0 +1,1 @@
+web: cd webscrapingtool; ENV_NAME=prod gunicorn webscrapingtool.wsgi; cd ..
