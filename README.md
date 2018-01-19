@@ -4,7 +4,7 @@ Web Scraping Tool is a set of two applications: An extensible web scraper (Scrap
 
 Currently only the spider for TechCrunch is available, but the project can be extended to have more spiders.
 
-Python. Django. SQLite3. Scrapy.
+Python. Django. PostgreSQL. Scrapy.
 
 Observation: The API (webscrapingtool) is in Python 3, since it is the recommended version to use and the one compatible with Heroku. However, scraper (webscraper) only works for Python 2 due to a dependency with the package 'twisted', that wasn't migrated to Python3.
 
@@ -101,39 +101,10 @@ curl -d '{"title":"Oceano Super Raso", "content":"rg egrg gergeg", "publication_
 - DELETE (remove)
 curl -X "DELETE" https://powerful-fjord-44213.herokuapp.com/v1/outlets/1/articles/1/
 
-### Challenge Checklist
-
-##### MVP
-[x] Create a private repository on Bitbucket and add @carolschmitz as admin;
-[x] The suggested framework is: Django;
-[x] Create a web scraping tool that constantly scrapes the articles of a major blog like TechCrunch (http://techcrunch.com) and stores it in a database (DBMS is a choice of the candidate). These are the relevant data that we want to store:
-    [x] Outlet name and metadata (URL, description, etc);
-    [x] Authors (name, twitter handle, profile page, etc);
-    [x] Published articles and metadata (publication date, author, content, etc);
-[x] Create a JSON REST API endpoints that serve the database data (outlets, authors and articles) - only GET is necessary;
-[x] An (oversimplified) example of API response for articles: http://www.ckl.io/challenge/.
-[x] Create a pull-request and assign it to @carolschmitz.
-[x] Host the server and provide its IP, as well as all the endpoint(s)  (https://devcenter.heroku.com/articles/getting-started-with-python#introduction);
-    [x] Change python version to 3.6
-    [x] Change the database to postgresql
-    [x] Push code to heroku and setup the database
-    [x] API running on heroku
-[x] It should scrape constantly
-
-##### Extras
-[x] Use cool GitHub libraries to aid the development;
-[x] Setup automatic tests;
-[x] Use a dependency manager;
-[x] Add other REST-compliant HTTP methods for the API (PUT, PATCH, POST, etc);
-[x] A server that resists to DDoS attacks;
-[x] Integrate with CI;
-[x] Provide an API endpoint to perform searches for articles;
-[-] Use automatic deploys; (I couldn't finish this part on time, but I read about it and it seems I needed to use Bitbucket Pipelines to achieve this one.)
-
-### Future Improvements:
+### TODOs:
 - improve the search articles feature to support more complex queries
 - allow sorting of results
-- generate a good documentation
+- generate a good documentation, maybe using Swagger
 - reference models by hiperlinks instead of PKs
 - reorganize tests to use factories, to avoid duplicated code
 - allow scraper to do POSTs in batches, to improve write performance
